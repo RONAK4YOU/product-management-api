@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Catalog</title>
+  <style>
+    body { font: 16px system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #172033; }
+    h1 { margin-bottom: .25rem; } .muted { color: #596579; }
+    form, .panel { border: 1px solid #d7deea; border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .75rem; }
+    label { display: grid; gap: .3rem; font-weight: 600; }
+    input, select, button { font: inherit; padding: .55rem; border: 1px solid #aeb8c8; border-radius: 6px; }
+    button { cursor: pointer; background: #174ea6; color: white; border: 0; margin: .5rem .35rem .1rem 0; }
+    button.secondary { background: #566277; } button.danger { background: #a92b36; }
+    #flash_message { min-height: 1.5rem; font-weight: 700; color: #176b3a; }
+    .product { border-top: 1px solid #d7deea; padding: .75rem 0; }
+    code { background: #edf1f7; padding: .1rem .3rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Product Catalog</h1>
+  <p class="muted">Create, retrieve, update, delete, and search products.</p>
+  <div id="flash_message" role="status" aria-live="polite"></div>
+
+  <section class="panel">
+    <h2>Search products</h2>
+    <div class="grid">
+      <label>Product Name <input id="search_name" name="search_name"></label>
+      <label>Category <input id="search_category" name="search_category"></label>
+      <label>Available
+        <select id="search_available" name="search_available">
+          <option value="">All</option><option value="true">true</option><option value="false">false</option>
+        </select>
+      </label>
+    </div>
+    <button id="search_button" onclick="searchProducts()">Search</button>
+    <button class="secondary" id="clear_button" onclick="clearForm()">Clear</button>
+    <div id="search_results" aria-live="polite"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Create product</h2>
+    <div class="grid">
+      <label>Name <input id="name" name="name"></label>
+      <label>Description <input id="description" name="description"></label>
+      <label>Price <input id="price" name="price" type="number" step="0.01"></label>
+      <label>Available <select id="available" name="available"><option value="true">true</option><option value="false">false</option></select></label>
+      <label>Category <input id="category" name="category"></label>
+    </div>
+    <button id="create_button" onclick="createProduct()">Create</button>
+  </section>
+
+  <section class="panel">
+    <h2>Product by ID</h2>
+    <label>Product ID <input id="product_id" name="product_id" type="number"></label>
+    <button id="retrieve_button" onclick="retrieveProduct()">Retrieve</button>
+    <button id="update_button" onclick="updateProduct()">Update</button>
+    <button class="danger" id="delete_button" onclick="deleteProduct()">Delete</button>
+    <div id="product_details"></div>
+  </section>
+  <script src="{{ url_for('static', filename='products.js') }}"></script>
+</body>
+</html>
